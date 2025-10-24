@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 
-import { PlanetList } from "@/components/planet-list";
+import { PlanetList } from "@/components/planet-list/planet-list";
 
 import styles from "./page.module.scss";
 
