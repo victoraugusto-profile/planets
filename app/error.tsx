@@ -1,17 +1,13 @@
 "use client";
 
-export default function Error({
-  error,
-  reset,
-}: {
-  error: Error;
-  reset: () => void;
-}) {
+import { redirect } from "next/navigation";
+
+export default function Error({ error }: { error: Error }) {
   return (
-    <div>
+    <div className="error-page">
       <h2>Something went wrong!</h2>
       <p>{error.message}</p>
-      <button onClick={() => reset()}>Try again</button>
+      <button onClick={() => redirect("/planets")}>Go back to Planets</button>
     </div>
   );
 }

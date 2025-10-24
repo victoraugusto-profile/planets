@@ -1,14 +1,22 @@
+import { getPlanets } from "@/lib/server-utils";
 import { SWAPIResponse, Planet } from "@/lib/types";
 
 import styles from "./planet-list.module.scss";
 
 interface PlanetListProps {
-  data: SWAPIResponse<Planet>;
+  page: number;
 }
 
-export async function PlanetList({ data }: PlanetListProps) {
-  if (!data || !data.results || data.results.length === 0) {
-    return null;
+// const ITEMS_PER_PAGE = 10;
+
+export async function PlanetList({ page }: PlanetListProps) {
+  // Let Next.js app/error.tsx boundary handle any error.
+  const data: SWAPIResponse<Planet> = await getPlanets(page);
+
+  //   const totalPages = Math.ceil(data.count / ITEMS_PER_PAGE);
+
+  if (!data?.results?.length) {
+    return <p className={styles.empty}>No planets found.</p>;
   }
 
   return (

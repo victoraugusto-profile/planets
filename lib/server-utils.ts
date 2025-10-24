@@ -11,17 +11,17 @@ export async function getPlanets(page: number) {
       cache: "force-cache",
     });
   } catch (err) {
-    throw new Error(`Failed to fetch planets: ${err}`);
+    throw new Error(`Failed to fetch planets: ${err}.`);
   }
 
   if (!res.ok) {
-    throw new Error(`Failed to fetch planets. Got status ${res.status})`);
+    throw new Error(`Failed to fetch planets. Got status ${res.status}.`);
   }
 
   try {
     data = (await res.json()) as SWAPIResponse<Planet>;
   } catch (err) {
-    throw new Error(`Failed to parse JSON: ${err}`);
+    throw new Error(`Failed to parse JSON: ${err}.`);
   }
 
   return data;
