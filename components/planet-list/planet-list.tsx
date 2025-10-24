@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getPlanets } from "@/lib/server-utils";
 import { SWAPIResponse, Planet } from "@/lib/types";
 import { PagerControls } from "../pager-controls/pager-controls";
@@ -10,6 +11,11 @@ interface PlanetListProps {
 }
 
 const ITEMS_PER_PAGE = 10;
+
+function getIdFromUrl(url: string): string {
+  const parts = url.split("/").filter(Boolean);
+  return parts[parts.length - 1];
+}
 
 export async function PlanetList({ page, search }: PlanetListProps) {
   // Let Next.js app/error.tsx boundary handle any error.
@@ -31,24 +37,27 @@ export async function PlanetList({ page, search }: PlanetListProps) {
     <>
       <ul className={styles["planet-list"]}>
         {sortedPlanets.map((planet) => {
+          const id = getIdFromUrl(planet.url);
           return (
             <li key={planet.url}>
-              <h2>{planet.name}</h2>
-              <p>{`Terrain: ${planet.terrain}`}</p>
-              <p>{`Diameter: ${planet.diameter}`}</p>
-              <p>{`Climate: ${planet.climate}`}</p>
-              <div>
-                Films:
-                {!!planet.films && planet.films.length !== 0 ? (
-                  <ul>
-                    {planet.films.map((film) => (
-                      <li key={film}>{film}</li>
-                    ))}
-                  </ul>
-                ) : (
-                  " none."
-                )}
-              </div>
+              <Link href={`/planets/${id}`}>
+                <h2>{planet.name}</h2>
+                <p>{`Terrain: ${planet.terrain}`}</p>
+                <p>{`Diameter: ${planet.diameter}`}</p>
+                <p>{`Climate: ${planet.climate}`}</p>
+                <div>
+                  Films:
+                  {!!planet.films && planet.films.length !== 0 ? (
+                    <ul>
+                      {planet.films.map((film) => (
+                        <li key={film}>{film}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    " none."
+                  )}
+                </div>
+              </Link>
             </li>
           );
         })}
