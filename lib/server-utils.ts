@@ -32,27 +32,45 @@ export async function getPlanets(page: number, searchStr?: string) {
   const searchQuery = searchStr ? `&search=${searchStr}` : "";
   const url = `https://swapi.dev/api/planets/?page=${page}${searchQuery}`;
 
-  return await fetchJson<SWAPIResponse<Planet>>(url, "planets");
+  // Fetch planets
+  const data = await fetchJson<
+    SWAPIResponse<Omit<Planet, "films"> & { films: string[] }>
+  >(url, "planets");
+
+  // Resolve films for each planet in parallel
+  const results: Planet[] = await Promise.all(
+    data.results.map(async (p) => {
+      const films = await Promise.all(
+        (p.films ?? []).map((filmUrl) =>
+          fetchJson<{ title: string }>(filmUrl, "film")
+        )
+      );
+      // Films is now Film[] with { title }
+      return { ...p, films };
+    })
+  );
+
+  return { ...data, results } as SWAPIResponse<Planet>;
 }
 
 export async function getPlanetDetail(id: string) {
-  // 1) Fetch the planet
+  // Fetch the planet
   const planetUrl = `https://swapi.dev/api/planets/${id}/`;
   const rawPlanet = await fetchJson<RawPlanetDetail>(planetUrl, `planet ${id}`);
 
-  // 2) Resolve residents in parallel
+  // Resolve residents in parallel
   const residents: Resident[] = await Promise.all(
     (rawPlanet.residents ?? []).map(async (residentUrl: string) => {
       const raw = await fetchJson<RawResident>(residentUrl, "resident");
 
-      // species (objects)
+      // Resolve species in parallel
       const speciesObjects: Specie[] = await Promise.all(
         (raw.species ?? []).map((specieUrl: string) =>
           fetchJson<Specie>(specieUrl, "specie")
         )
       );
 
-      // vehicles (objects)
+      // Resolve vehicles in parallel
       const vehicleObjects: Vehicles[] = await Promise.all(
         (raw.vehicles ?? []).map((vehicleUrl: string) =>
           fetchJson<Vehicles>(vehicleUrl, "vehicle")

@@ -48,9 +48,9 @@ export async function PlanetList({ page, search }: PlanetListProps) {
                 <div>
                   Films:
                   {!!planet.films && planet.films.length !== 0 ? (
-                    <ul>
-                      {planet.films.map((film) => (
-                        <li key={film}>{film}</li>
+                    <ul className={styles["films-list"]}>
+                      {planet.films.map((film, idx) => (
+                        <li key={`${film.title}-${idx}`}>{film.title}</li>
                       ))}
                     </ul>
                   ) : (

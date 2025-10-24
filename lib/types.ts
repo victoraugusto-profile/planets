@@ -5,12 +5,16 @@ export interface SWAPIResponse<T> {
   results: T[];
 }
 
+export interface Film {
+  title: string;
+}
+
 export interface Planet {
   name: string;
   terrain: string;
   diameter: string;
   climate: string;
-  films: string[];
+  films: Film[];
   url: string;
 }
 
@@ -25,8 +29,8 @@ export interface Vehicles {
 
 export interface Resident {
   name: string;
-  ["hair_color"]: string;
-  ["eye_color"]: string;
+  hair_color: string;
+  eye_color: string;
   gender: string;
   species: Specie[];
   vehicles: Vehicles[];
@@ -34,8 +38,8 @@ export interface Resident {
 
 export interface PlanetDetail {
   name: string;
-  ["rotation_period"]: string;
-  ["orbital_period"]: string;
+  rotation_period: string;
+  orbital_period: string;
   diameter: string;
   climate: string;
   gravity: string;

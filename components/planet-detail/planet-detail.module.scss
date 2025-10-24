@@ -22,7 +22,7 @@
 .resident-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
-  gap: 1rem;
+  gap: 2rem;
   margin-top: 1rem;
   padding: 0;
   list-style: none;
@@ -31,7 +31,7 @@
 }
 
 .resident-list > li {
-  width: 15rem;
+  width: 17rem;
 }
 
 .resident-card {
@@ -43,6 +43,13 @@
   flex-wrap: wrap;
   flex-direction: column;
   gap: 0.5rem;
+}
+
+.species-list,
+.vehicles-list {
+  list-style: disc;
+  padding-left: 1.25rem;
+  margin-top: 0.25rem;
 }
 
 .empty {

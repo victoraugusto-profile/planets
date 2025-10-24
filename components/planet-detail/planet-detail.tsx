@@ -49,25 +49,29 @@ export function PlanetDetail({ planet }: PlanetDetailProps) {
                 </p>
                 <div>
                   <strong>Species:</strong>{" "}
-                  {r.species.length
-                    ? r.species.map((s, idx) => (
-                        <span key={`${s.name}-${idx}`}>
-                          {s.name}
-                          {idx < r.species.length - 1 ? ", " : ""}
-                        </span>
-                      ))
-                    : "none"}
+                  {r.species.length ? (
+                    <ul className={styles["species-list"]}>
+                      {r.species.map((s, idx) => (
+                        <li key={`${s.name}-${idx}`}>{s.name}</li>
+                      ))}
+                    </ul>
+                  ) : (
+                    "none"
+                  )}
                 </div>
                 <div>
                   <strong>Vehicles:</strong>{" "}
-                  {r.vehicles.length
-                    ? r.vehicles.map((v, idx) => (
-                        <span key={`${v.name}-${v.model}-${idx}`}>
+                  {r.vehicles.length ? (
+                    <ul className={styles["vehicles-list"]}>
+                      {r.vehicles.map((v, idx) => (
+                        <li key={`${v.name}-${v.model}-${idx}`}>
                           {v.name} <em>({v.model})</em>
-                          {idx < r.vehicles.length - 1 ? ", " : ""}
-                        </span>
-                      ))
-                    : "none"}
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    "none"
+                  )}
                 </div>
               </li>
             ))}
