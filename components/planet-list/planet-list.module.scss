@@ -35,3 +35,9 @@
 .empty {
   margin-top: 2rem;
 }
+
+@media (max-width: 1214px) {
+  .planet-list {
+    justify-content: center;
+  }
+}
