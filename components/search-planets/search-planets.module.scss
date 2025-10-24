@@ -1,0 +1,39 @@
+.search-planets {
+  display: "flex";
+  flex-direction: row;
+  gap: 3rem;
+  margin-bottom: 2rem;
+  margin-top: 3rem;
+}
+
+.input {
+  :global(.MuiInputBase-input) {
+    color: #171717;
+  }
+
+  :global(.MuiInputLabel-root) {
+    color: #171717;
+  }
+  :global(.MuiInputLabel-root.Mui-focused) {
+    color: #171717;
+  }
+
+  :global(.MuiInput-underline:before) {
+    border-bottom-color: #171717;
+  }
+  :global(.MuiInput-underline:hover:before) {
+    border-bottom-color: #171717;
+  }
+  :global(.MuiInput-underline:after) {
+    border-bottom-color: #171717;
+  }
+}
+
+.button {
+  background-color: #171717 !important;
+  color: white !important;
+
+  &:hover {
+    background-color: #3d3d3d !important;
+  }
+}
